@@ -1,18 +1,33 @@
-local test = require("src/test")
+local carte = require("src/models/game_map/game_map")
+local game_map_service = require("src/services/game_map_service")
+
 local timer = 0
+local fps = 0
+local nb_frames = 0
+local game_map = {}
+local camera = {}
+
 function love.load()
-    print(" -- loading OK")
-    test.toto()
+    game_map = carte.create()
+    camera = {w = 0, h = 0}
 end
 
 function love.update(dt)
     timer = timer + dt
+    nb_frames = nb_frames + 1
     if timer > 1.0 then
-        print("1 seconde de plus")
+        fps = nb_frames
+        nb_frames = 0
         timer = 0
     end
 end
 
 function love.draw()
-    love.graphics.print("Hello World!", 300, 300)
+    game_map_service.draw(game_map, camera)
+    draw_fps(fps)
+end
+
+
+function draw_fps(fps)
+    love.graphics.print("fps : "..fps, 0, love.graphics.getHeight() -32)
 end
