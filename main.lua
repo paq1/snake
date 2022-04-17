@@ -29,5 +29,5 @@ end
 
 
 function draw_fps(fps)
-    love.graphics.print("fps : "..fps, 0, 0)
+    love.graphics.print("fps : "..fps, 0, love.graphics.getHeight() -32)
 end
