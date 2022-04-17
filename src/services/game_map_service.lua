@@ -1,4 +1,5 @@
 local tile_map_service = require("src/services/tile_map_service")
+local game_map_data = require("src/models/game_map/game_map_data")
 
 local game_map_service = {}
 
@@ -8,7 +9,7 @@ function game_map_service.draw(game_map, cam)
     for l = 1, nb_line do
         for c = 1, nb_column do
             local tile = game_map[l][c]
-            tile_map_service.draw(tile, cam)
+            tile_map_service.draw(tile, cam, game_map_data.tile_size)
         end
     end
 end

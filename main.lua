@@ -1,5 +1,6 @@
-local carte = require("src/models/game_map")
+local carte = require("src/models/game_map/game_map")
 local game_map_service = require("src/services/game_map_service")
+
 local timer = 0
 local fps = 0
 local nb_frames = 0
@@ -8,7 +9,7 @@ local camera = {}
 
 function love.load()
     game_map = carte.create()
-    camera = {w = love.graphics.getWidth() / 4, h = love.graphics.getHeight() / 4}
+    camera = {w = 0, h = 0}
 end
 
 function love.update(dt)
