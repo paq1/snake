@@ -1,5 +1,5 @@
 local carte = require("src/models/game_map/game_map")
-local game_map_service = require("src/services/game_map_service")
+local game_map_service = require("src/services/game_map/game_map_service")
 
 local sn = require("src/models/snake/snake")
 local snake_service = require("src/services/snake_service")
@@ -12,8 +12,12 @@ local snake = {}
 local camera = {}
 
 function love.load()
+    -- init game map
     game_map = carte.create()
+    game_map_service.spawn_apple(game_map)
+    -- init snake
     snake = sn.create({ x = 0, y = 0 })
+    -- init camera
     camera = {w = 0, h = 0}
 end
 
@@ -26,6 +30,7 @@ function love.update(dt)
         timer = 0
     end
 
+    game_map_service.update(game_map, dt)
     snake_service.update(snake, dt, game_map)
 end
 

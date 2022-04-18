@@ -2,6 +2,7 @@ local sn = require("src/models/snake/snake")
 local Direction = require("src/models/direction/direction")
 local game_map_data = require("src/models/game_map/game_map_data")
 local keyboard_service = require("src/services/keyboard/keyboard_service")
+local game_map_service = require("src/services/game_map/game_map_service")
 
 local snake_service = {}
 snake_service.timer = 0
@@ -9,6 +10,7 @@ snake_service.next_dir = Direction.DROITE
 
 function snake_service.update(snake, dt, game_map)
     avance(snake, dt, game_map)
+    snake_eat_apple_update(snake, game_map)
 end
 
 function snake_service.draw(snake, game_map, camera)
@@ -84,6 +86,19 @@ function deplacement_keyboard(snake)
             return Direction.DROITE
         end
     end
+end
+
+function snake_eat_apple_update(snake, game_map)
+    if #game_map.apples > 0 then
+        local apple = game_map.apples[1]
+        if is_snake_collide_with_apple(snake, apple) then
+            game_map_service.delete_apple(game_map)
+        end
+    end
+end
+
+function is_snake_collide_with_apple(snake, apple)
+    return snake.position.x == apple.position.x and snake.position.y == apple.position.y
 end
 
 return snake_service
